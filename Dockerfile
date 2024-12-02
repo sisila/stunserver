@@ -1,4 +1,4 @@
-FROM ubuntu:18.04 as build
+FROM ubuntu:24.04 as build
 
 RUN set -ex && \
     apt-get update && \
@@ -13,11 +13,11 @@ RUN set -ex && \
 
 RUN cd /opt && git clone https://github.com/jselbie/stunserver.git && cd stunserver && make
 
-FROM ubuntu:18.04
+FROM ubuntu:24.04
 
 EXPOSE 3478/tcp 3478/udp
 
-RUN apt update && apt install libssl1.1 && apt-get clean
+RUN apt update && apt install libssl3 && apt-get clean
 
 RUN mkdir /opt/stunserver
 COPY --from=build /opt/stunserver/stunclient /opt/stunserver/stunclient
